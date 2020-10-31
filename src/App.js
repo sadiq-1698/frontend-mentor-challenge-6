@@ -1,18 +1,22 @@
 import './App.css';
-import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
+import {useState} from 'react';
+import { Map, TileLayer, Marker } from 'react-leaflet';
 
-const API_KEY = "at_bw66IjBPNWfpETzkzuXESAdTeI2xf";
+// const API_KEY = "at_bw66IjBPNWfpETzkzuXESAdTeI2xf";
 
 function App() {
+
+  const[showLocation, setShowLocation] = useState(false);
+
   return (
     <div className="main-wrapper">
-      <Banner />
-      <MapComponent />
+      <Banner showLocation={showLocation}/>
+      <MapComponent showLocation={showLocation} setShowLocation={setShowLocation}/>
     </div>
   );
 }
 
-const Banner = () => {
+const Banner = (props) => {
   return (
     <div className="banner">
         <img src={process.env.PUBLIC_URL + '/pattern-bg.png'} alt="top-banner" />
@@ -23,7 +27,7 @@ const Banner = () => {
             <img src={process.env.PUBLIC_URL + '/icon-arrow.svg'} alt="top-banner" />
           </button>
         </div>
-        <div className="location-container">
+        <div className="location-container" style={{display : props.showLocation ? "flex" : "none"}}>
             <div className="header-span">
               <span>IP Address</span>
               <h2>192.168.1.10</h2>
@@ -45,12 +49,19 @@ const Banner = () => {
   );
 }
 
-const MapComponent = () => {
+const MapComponent = (props) => {
   return (
     <Map center={[37.4223, -122.085]} zoom={15}>
       <TileLayer 
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?"
         attribution = '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>'
+      />
+      <Marker 
+        key="unique"
+        position={[37.4223, -122.085]}
+        onClick={()=>{
+          props.setShowLocation((prev) => !prev);
+        }}
       />
     </Map>
   );
