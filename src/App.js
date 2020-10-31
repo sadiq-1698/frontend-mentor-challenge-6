@@ -1,10 +1,13 @@
 import './App.css';
-import {Map} from 'react-leaflet';
+import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
+
+const API_KEY = "at_bw66IjBPNWfpETzkzuXESAdTeI2xf";
 
 function App() {
   return (
     <div className="main-wrapper">
       <Banner />
+      <MapComponent />
     </div>
   );
 }
@@ -42,10 +45,13 @@ const Banner = () => {
   );
 }
 
-const Map = () => {
+const MapComponent = () => {
   return (
-    <Map>
-
+    <Map center={[37.4223, -122.085]} zoom={15}>
+      <TileLayer 
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?"
+        attribution = '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>'
+      />
     </Map>
   );
 }
