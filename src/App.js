@@ -1,4 +1,5 @@
 import './App.css';
+import {Map} from 'react-leaflet';
 
 function App() {
   return (
@@ -38,6 +39,14 @@ const Banner = () => {
             </div>
         </div>
     </div>
+  );
+}
+
+const Map = () => {
+  return (
+    <Map>
+
+    </Map>
   );
 }
 
