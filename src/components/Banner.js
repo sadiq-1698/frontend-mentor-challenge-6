@@ -1,6 +1,6 @@
 import React,{ useState } from 'react';
 
-const Banner = ({setIpAddress, showLocation, ipAddress}) => {
+const Banner = ({setIpAddress, showLocation, ipAddress, result}) => {
 
     const[value, setValue] = useState("");
 
@@ -14,43 +14,33 @@ const Banner = ({setIpAddress, showLocation, ipAddress}) => {
               placeholder="Search for any IP address or domain"
               onKeyDown={(event) => {
                 if(event.key === 'Enter') {
-                  if(checkIsIPV4(event.target.value)){
-                    setIpAddress(event.target.value);
-                  }else{
-                    alert('Invalid IP address');
-                  }
+                  isValidIP(event.target.value);
                 }
               }}
-              onChange={(e)=>setValue(e.target.value)}
+              onChange={(e) => setValue(e.target.value)}
             />
-            <button onClick={() =>{
-              if(checkIsIPV4(value)){
-                setIpAddress(value);
-              }else{
-                alert('Invalid IP address');
-              }
-            }}>
+            <button onClick={() => isValidIP(value)}>
               <img src={process.env.PUBLIC_URL + '/icon-arrow.svg'} alt="top-banner" />
             </button>
           </div>
-          <div className="location-container" style={{display : showLocation ? "flex" : "none"}}>
+          {result && <div className="location-container" style={{display : showLocation ? "flex" : "none"}}>
               <div className="header-span">
                 <span>IP Address</span>
                 <h2>{ipAddress}</h2>
               </div>
               <div className="header-span">
                 <span>Location</span>
-                <h2>Brooklyn, NY, USA</h2>
+                <h2>{result.location.city}, {result.location.region}, {result.location.country}</h2>
               </div>            
               <div className="header-span">
                 <span>Timezone</span>
-                <h2>UTC : 05:00</h2>
+                <h2>UTC : {result.location.timezone}</h2>
               </div>            
               <div className="header-span">
                 <span>ISP</span>
-                <h2>SpaceX Starlink</h2>
+                <h2>{result.isp}</h2>
               </div>
-          </div>
+          </div>}
       </div>
     );
 
@@ -62,6 +52,14 @@ const Banner = ({setIpAddress, showLocation, ipAddress}) => {
         });
       }
       return false;
+    }
+
+    function isValidIP(val){
+      if(checkIsIPV4(val)){
+        setIpAddress(val);
+      }else{
+        alert('Invalid IP address');
+      }
     }
   
 }

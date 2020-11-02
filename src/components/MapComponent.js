@@ -11,7 +11,7 @@ const MapComponent = (props) => {
 
     return (
       !result ? <center>Loading...</center> :
-      <Map center={[34.0614, -118.08162]} zoom={15}>
+      <Map center={[result.location.lat, result.location.lng]} zoom={15}>
         <TileLayer 
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png?"
           attribution = '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>'
