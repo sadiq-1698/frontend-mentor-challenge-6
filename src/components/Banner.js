@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+
+
 
 const Banner = (props) => {
+
     return (
       <div className="banner">
           <img src={process.env.PUBLIC_URL + '/pattern-bg.png'} alt="top-banner" />
